@@ -42,4 +42,4 @@ jobs:
           chmod 700 build.sh
           ./build.sh
           npx cdk synth -r $CFN_ROLE
-          npx cdk deploy * -r $CFN_ROLE --require-approval never
+          npx cdk deploy NotAHotdogStack -r $CFN_ROLE --require-approval never
