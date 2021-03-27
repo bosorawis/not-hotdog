@@ -42,4 +42,4 @@ jobs:
           chmod 700 build.sh
           ./build.sh
           npx cdk synth
-          npx cdk —require-approval=never -r $CFN_ROLE
+          npx cdk —require-approval never -r $CFN_ROLE
