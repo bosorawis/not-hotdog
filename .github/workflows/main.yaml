@@ -21,14 +21,14 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.REGION }}
-          role-to-assume: ${{ secrets.GH_ROLE_ARN }}
-          role-duration-seconds: 1200
+          role-to-assume: ${{ secrets.GH_ROLE_ARNAA }}
+          role-duration-seconds: 1200yy
           role-session-name: GitActionDeploymentSession
       - name: Prerequisite Installation
         run: |
           cd $GITHUB_WORKSPACE
           npm install
-          cdk --version
+          npx cdk --version
           aws s3 ls
       - name: Build & Deploy
         run: |
