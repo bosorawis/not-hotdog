@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  REGION: 'us-wst-2'
+  REGION: 'us-west-2'
 
 jobs:
   cicd:
