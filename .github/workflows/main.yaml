@@ -7,6 +7,7 @@ on:
 
 env:
   REGION: 'us-west-2'
+  DEPLOY_ROLE: ${{secrets.GH_ROLE_ARN}}
 
 jobs:
   cicd:
@@ -37,4 +38,4 @@ jobs:
           chmod 700 build.sh
           ./build.sh
           npx cdk synth
-          npx cdk —require-approval=never
+          npx cdk —require-approval=never -r $DEPLOY_ROLE
