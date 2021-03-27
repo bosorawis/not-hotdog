@@ -31,9 +31,9 @@ jobs:
       - name: Prerequisite Installation
         run: |
           cd $GITHUB_WORKSPACE
+          npm --version
           npm install
           npx cdk --version
-          aws s3 ls
       - name: Build & Deploy
         env:
           CFN_ROLE: ${{secrets.CFN_EXECUTION_ROLE}}
