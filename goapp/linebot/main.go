@@ -6,7 +6,10 @@ import(
 )
 
 func handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	panic("not implemented")
+	return events.APIGatewayProxyResponse{
+		StatusCode: 200,
+		Body: "hello world",
+	} ,nil
 }
 
 func main(){

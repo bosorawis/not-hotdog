@@ -1,0 +1,39 @@
+name: AWS CDK Synth
+
+on: [push]
+  branches:
+    - main
+
+env:
+  REGION: 'us-wst-2'
+
+jobs:
+  cicd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
+          role-to-assume: ${{ secrets.CROSS_ACCOUNT_ROLE }}
+          role-duration-seconds: 1200
+          role-session-name: GitActionDeploymentSession
+      - name: Prerequisite Installation
+        run: |
+          cd $GITHUB_WORKSPACE
+          npm install
+          cdk --version
+          aws s3 ls
+      - name: Build & Deploy
+        run: |
+          cd $GITHUB_WORKSPACE
+          ls -a
+          chmod 700 build.sh
+          ./build.sh
+          npx cdk synth
+          npx cdk —require-approval=never
