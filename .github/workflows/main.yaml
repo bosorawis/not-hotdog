@@ -35,7 +35,7 @@ jobs:
           CFN_ROLE: ${{secrets.CFN_EXECUTION_ROLE}}
         run: |
           cd $GITHUB_WORKSPACE
-          ls -a
+          printenv
           chmod 700 build.sh
           ./build.sh
           npx cdk synth
