@@ -24,6 +24,10 @@ jobs:
           role-to-assume: ${{ secrets.GH_ROLE_ARNAA }}
           role-duration-seconds: 1200yy
           role-session-name: GitActionDeploymentSession
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          check-latest: true
       - name: Prerequisite Installation
         run: |
           cd $GITHUB_WORKSPACE
@@ -35,7 +39,6 @@ jobs:
           CFN_ROLE: ${{secrets.CFN_EXECUTION_ROLE}}
         run: |
           cd $GITHUB_WORKSPACE
-          printenv
           chmod 700 build.sh
           ./build.sh
           npx cdk synth
