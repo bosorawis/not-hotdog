@@ -33,7 +33,7 @@ jobs:
           cd $GITHUB_WORKSPACE
           npm --version
           npm install
-          npx cdk --version
+          npx cdk --version 
       - name: Build & Deploy
         env:
           CFN_ROLE: ${{secrets.CFN_EXECUTION_ROLE}}
@@ -41,5 +41,5 @@ jobs:
           cd $GITHUB_WORKSPACE
           chmod 700 build.sh
           ./build.sh
-          npx cdk synth
-          npx cdk --require-approval never -r $CFN_ROLE
+          npx cdk synth -r $CFN_ROLE
+          npx cdk deploy * -r $CFN_ROLE --require-approval never
