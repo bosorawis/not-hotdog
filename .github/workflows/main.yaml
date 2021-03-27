@@ -1,8 +1,9 @@
 name: AWS CDK Synth
 
-on: [push]
-  branches:
-    - main
+on:
+  push:
+    branches:
+      - main
 
 env:
   REGION: 'us-wst-2'
