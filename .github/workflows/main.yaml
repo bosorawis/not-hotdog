@@ -31,10 +31,12 @@ jobs:
           npx cdk --version
           aws s3 ls
       - name: Build & Deploy
+        env:
+          CFN_ROLE: ${{secrets.CFN_EXECUTION_ROLE}}
         run: |
           cd $GITHUB_WORKSPACE
           ls -a
           chmod 700 build.sh
           ./build.sh
           npx cdk synth
-          npx cdk —require-approval=never
+          npx cdk —require-approval=never -r $CFN_ROLE
