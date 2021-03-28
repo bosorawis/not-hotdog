@@ -41,5 +41,5 @@ jobs:
           cd $GITHUB_WORKSPACE
           chmod 700 build.sh
           ./build.sh
-          npx cdk synth -r $CFN_ROLE
-          npx cdk deploy NotAHotdogStack -r $CFN_ROLE --require-approval never
+          npx cdk synth --role-arn $CFN_ROLE
+          npx cdk deploy NotAHotdogStack --role-arn $CFN_ROLE --require-approval never -v
