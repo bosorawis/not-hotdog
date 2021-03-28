@@ -41,5 +41,5 @@ jobs:
           cd $GITHUB_WORKSPACE
           chmod 700 build.sh
           ./build.sh
-          npx cdk synth --role-arn $CFN_ROLE
-          npx cdk deploy --role-arn $CFN_ROLE --require-approval never
+          npx cdk synth
+          npx cdk deploy --require-approval never
