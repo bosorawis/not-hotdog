@@ -27,9 +27,13 @@ export class NotAHotdogStack extends cdk.Stack {
         NOT_HOTDOG_CHANNEL_TOKEN: token
       }
     });
-    botFunc.addToRolePolicy(new iam.PolicyStatement(
-
-    ))
+    botFunc.addToRolePolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        'rekognition:DetectLabels'
+      ],
+      resources: ['*'],
+    }));
 
     const api : apigwv2.HttpApi = new apigwv2.HttpApi(this, 'not-hotdog-gateway', {});
 
