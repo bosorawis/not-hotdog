@@ -33,9 +33,9 @@ func formatNotMatch(label string) string{
 
 func (s *server) notImageHandler(message *linebot.ImageMessage, replyToken string) error {
 	s.logger.Info("handling image message", zap.String("imageUrl", message.PreviewImageURL))
-	response, err := http.Get(message.PreviewImageURL)
+	response, err := http.Get("https://" + message.PreviewImageURL)
 	if err != nil {
-		s.logger.Error("failed to get image", zap.Error(err))
+		s.logger.Error("failed to get image", zap.Error(err), zap.String("url", message.PreviewImageURL))
 		return fmt.Errorf("failed to fetch image from url %v", err)
 	}
 	defer response.Body.Close()
