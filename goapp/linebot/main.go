@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"github.com/aws/aws-lambda-go/events"
@@ -38,9 +39,13 @@ func (s *server) notImageHandler(message *linebot.ImageMessage, replyToken strin
 		return fmt.Errorf("failed to get image content %v ", err)
 	}
 	defer content.Content.Close()
-	var image []byte
-	_, _ = content.Content.Read(image)
-	match, err := s.labeler.doesLabelMatch(image, "dog")
+	buf := new(bytes.Buffer)
+	_, err = buf.ReadFrom(content.Content)
+	if err != nil {
+		s.logger.Info("unable to read image content")
+		return fmt.Errorf("unable to read image content %v ", err)
+	}
+	match, err := s.labeler.doesLabelMatch(buf.Bytes(), "dog")
 	if err != nil {
 		s.logger.Error("failed to detect labels", zap.Error(err))
 		return fmt.Errorf("cannot detect label %v", err)
