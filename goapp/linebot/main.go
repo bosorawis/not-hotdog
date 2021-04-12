@@ -6,6 +6,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/line/line-bot-sdk-go/v7/linebot"
+	"github.com/awslabs/aws-lambda-go-api-proxy/handlerfunc"
 	"go.uber.org/zap"
 	"net/http"
 	"os"
@@ -75,11 +76,9 @@ func (s *server) handleHook() http.HandlerFunc {
 	}
 }
 
-func (s *server) lambdaHandler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	return events.APIGatewayProxyResponse{
-		StatusCode: 200,
-		Body: "hello world",
-	} ,nil
+func (s *server) lambdaHandler(ctx context.Context, req events.APIGatewayV2HTTPRequest) (events.APIGatewayV2HTTPResponse, error) {
+	h := handlerfunc.NewV2(s.handleHook())
+	return h.ProxyWithContext(ctx, req)
 }
 
 

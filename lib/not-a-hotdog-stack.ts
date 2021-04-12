@@ -1,6 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import * as apigwv2 from '@aws-cdk/aws-apigatewayv2';
 import * as ssm from '@aws-cdk/aws-ssm';
+import * as iam from '@aws-cdk/aws-iam';
 import * as integrations from '@aws-cdk/aws-apigatewayv2-integrations';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as path from "path";
@@ -12,11 +13,9 @@ export class NotAHotdogStack extends cdk.Stack {
 
     const secret = ssm.StringParameter.fromStringParameterAttributes(this, 'lineSecret', {
       parameterName: 'NOT_HOTDOG_CHANNEL_SECRET',
-      // 'version' can be specified but is optional.
     }).stringValue;
     const token = ssm.StringParameter.fromStringParameterAttributes(this, 'lineToken', {
       parameterName: 'NOT_HOTDOG_CHANNEL_TOKEN',
-      // 'version' can be specified but is optional.
     }).stringValue;
 
     const botFunc = new lambda.Function(this, 'not-hotdog-bot', {
@@ -28,6 +27,9 @@ export class NotAHotdogStack extends cdk.Stack {
         NOT_HOTDOG_CHANNEL_TOKEN: token
       }
     });
+    botFunc.addToRolePolicy(new iam.PolicyStatement(
+
+    ))
 
     const api : apigwv2.HttpApi = new apigwv2.HttpApi(this, 'not-hotdog-gateway', {});
 
