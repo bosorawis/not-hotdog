@@ -34,6 +34,7 @@ func formatNotMatch(label string) string{
 
 func (s *server) notImageHandler(message *linebot.ImageMessage, replyToken string) error {
 	content, err := s.line.GetMessageContent(message.ID).Do()
+	label := "hotdog"
 	if err != nil {
 		s.logger.Info("handling image message", zap.String("imageUrl", message.OriginalContentURL))
 		return fmt.Errorf("failed to get image content %v ", err)
@@ -45,16 +46,16 @@ func (s *server) notImageHandler(message *linebot.ImageMessage, replyToken strin
 		s.logger.Info("unable to read image content")
 		return fmt.Errorf("unable to read image content %v ", err)
 	}
-	match, err := s.labeler.doesLabelMatch(buf.Bytes(), "dog")
+	match, err := s.labeler.doesLabelMatch(buf.Bytes(), label)
 	if err != nil {
 		s.logger.Error("failed to detect labels", zap.Error(err))
 		return fmt.Errorf("cannot detect label %v", err)
 	}
 	if !match {
-		_, err := s.line.ReplyMessage(replyToken, linebot.NewTextMessage(formatNotMatch("dog"))).Do()
+		_, err := s.line.ReplyMessage(replyToken, linebot.NewTextMessage(formatNotMatch(label))).Do()
 		return err
 	}
-	_, err = s.line.ReplyMessage(replyToken, linebot.NewTextMessage(formatMatched("dog"))).Do()
+	_, err = s.line.ReplyMessage(replyToken, linebot.NewTextMessage(formatMatched(label))).Do()
 	return err
 
 }
