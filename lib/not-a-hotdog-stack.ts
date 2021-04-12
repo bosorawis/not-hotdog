@@ -22,6 +22,8 @@ export class NotAHotdogStack extends cdk.Stack {
       handler: "handler",
       runtime: lambda.Runtime.GO_1_X,
       code: lambda.AssetCode.fromAsset(path.join('.build', 'linebot')),
+      timeout: cdk.Duration.minutes(1),
+      memorySize: 4096,
       environment:{
         NOT_HOTDOG_CHANNEL_SECRET: secret,
         NOT_HOTDOG_CHANNEL_TOKEN: token
