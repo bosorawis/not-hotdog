@@ -32,15 +32,14 @@ func formatNotMatch(label string) string{
 }
 
 func (s *server) notImageHandler(message *linebot.ImageMessage, replyToken string) error {
-	s.logger.Info("handling image message", zap.String("imageUrl", message.OriginalContentURL))
-	response, err := http.Get(message.OriginalContentURL)
+	content, err := s.line.GetMessageContent(message.ID).Do()
 	if err != nil {
-		s.logger.Error("failed to get image", zap.Error(err), zap.String("url", message.OriginalContentURL))
-		return fmt.Errorf("failed to fetch image from url %v", err)
+		s.logger.Info("handling image message", zap.String("imageUrl", message.OriginalContentURL))
+		return fmt.Errorf("failed to get image content %v ", err)
 	}
-	defer response.Body.Close()
+	defer content.Content.Close()
 	var image []byte
-	_, _ = response.Body.Read(image)
+	_, _ = content.Content.Read(image)
 	match, err := s.labeler.doesLabelMatch(image, "dog")
 	if err != nil {
 		s.logger.Error("failed to detect labels", zap.Error(err))
