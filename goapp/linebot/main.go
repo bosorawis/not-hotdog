@@ -34,7 +34,7 @@ func formatNotMatch(label string) string{
 
 func (s *server) notImageHandler(message *linebot.ImageMessage, replyToken string) error {
 	content, err := s.line.GetMessageContent(message.ID).Do()
-	label := "hotdog"
+	label := "dog"
 	if err != nil {
 		s.logger.Info("handling image message", zap.String("imageUrl", message.OriginalContentURL))
 		return fmt.Errorf("failed to get image content %v ", err)
