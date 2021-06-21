@@ -1,14 +1,26 @@
-# Welcome to your CDK TypeScript project!
+# Not Hotdog implementation on Line messaging platform
 
-This is a blank project for TypeScript development with CDK.
+Line bot that will tell you whether the photo you sent it is a hotdog or not
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Technology
 
-## Useful commands
+- AWS API Gateway
+- AWS Lambda
+- AWS Rekognition
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+## Why
+¯\_(ツ)_/¯
+ your app.
+
+## Deployment
+
+### Install list
+- [npm](https://www.npmjs.com/)
+- [go1.15+](https://golang.org/doc/install)
+- [aws-cdk](https://aws.amazon.com/cdk/)
+
+```bash
+./build.sh
+npx cdk synth
+npx cdk deploy
+```
